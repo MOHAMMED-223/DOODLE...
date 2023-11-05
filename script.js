@@ -97,7 +97,7 @@ function move() {
 
     // تحديث أفضل النقاط
     if (score > bestScore) {
-        bestScore = score;
+        bestScore = score;س
         localStorage.setItem('bestScore', bestScore); // حفظ أفضل النقاط
     }
 }
