@@ -42,6 +42,68 @@ function direction(event) {
         dy = 1;
     }
 }
+// ... (الكود السابق بدون الأحداث للمس)
+
+// الحركة والتحكم
+document.addEventListener('keydown', direction);
+document.addEventListener('touchstart', handleTouchStart, false);
+document.addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;
+var yDown = null;
+
+function handleTouchStart(evt) {
+    xDown = evt.touches[0].clientX;
+    yDown = evt.touches[0].clientY;
+};
+
+function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0) {
+            // swipe left
+            if (dx !== 1) {
+                dx = -1;
+                dy = 0;
+            }
+        } else {
+            // swipe right
+            if (dx !== -1) {
+                dx = 1;
+                dy = 0;
+            }
+        }
+    } else {
+        if (yDiff > 0) {
+            // swipe up
+            if (dy !== 1) {
+                dx = 0;
+                dy = -1;
+            }
+        } else {
+            // swipe down
+            if (dy !== -1) {
+                dx = 0;
+                dy = 1;
+            }
+        }
+    }
+    // reset values
+    xDown = null;
+    yDown = null;
+};
+
+// ... (الكود الباقي كما هو)
+
 
 // الرسم والتحديث
 function draw() {
@@ -97,7 +159,7 @@ function move() {
 
     // تحديث أفضل النقاط
     if (score > bestScore) {
-        bestScore = score;س
+        bestScore = score;
         localStorage.setItem('bestScore', bestScore); // حفظ أفضل النقاط
     }
 }
